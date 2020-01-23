@@ -5,14 +5,14 @@ This package provides complete functionality to compute synergistic information
 via privacy-preserving data disclosure. This repository contains the companion
 software for the paper:
 
-F. Rosas*, P. Mediano* and A. Barrett (2019). An operational information
-decomposition via synergistic disclosure.
+F. Rosas\*, P. Mediano\*, B. Rassouli and A. Barrett (2019). An operational
+information decomposition via synergistic disclosure.
 
 Please cite the paper (and give us a shout!) if you use this software. Please
 contact Pedro Mediano for bug reports, pull requests, and feature requests.
 
-
-## Description and basic intuitions
+Description and basic intuitions
+--------------------------------
 
 Under the hood, the computation of synergistic disclosure proceeds in two steps:
 
@@ -39,94 +39,89 @@ X_1 and X_2 (but may disclose information about X_3).
 See the main paper and references below for a detailed description of the
 measure.
 
-
-## Examples
+Examples
+--------
 
 The package aims to provide a lean interface to the key functions that compute
 the synergistic disclosure as described in the paper above. The main point of
 access to the code is the `disclosure()` function, which takes a
 `dit.Distribution` as argument:
 
-`
-import dit
-from syndisc import disclosure
+.. code-block:: python
+  import dit
+  from syndisc import disclosure
 
-XOR = dit.example_dists.Xor()
-print('Synergy in XOR: ', disclosure(XOR))
+  XOR = dit.example_dists.Xor()
+  print('Synergy in XOR: ', disclosure(XOR))
 
-COPY = dit.example_dists.giant_bit()
-print('Synergy in COPY: ', disclosure(COPY))
-`
+  COPY = dit.example_dists.giant_bit()
+  print('Synergy in COPY: ', disclosure(COPY))
 
-By default, for a distribution of $n+1$ variables, `disclosure()` uses the
-first $n$ as sources, the last one as target, and uses the constraint set
-`{1}{2}...{n}`. These can be changed via optional arguments:
+By default, for a distribution of n+1 variables, ``disclosure()`` uses the
+first n as sources, the last one as target, and uses the constraint set
+``{1}{2}...{n}``. These can be changed via optional arguments:
 
-`
-import dit
-from syndisc import disclosure
+.. code-block:: python
+  dblxor = dit.pid.distributions.trivariate.dblxor
+  disclosure(dblxor)
+  disclosure(dblxor, cons=[[0,1]])
 
-dblxor = dit.pid.distributions.trivariate.dblxor
-disclosure(dblxor)
-disclosure(dblxor, cons=[[0,1]])
-`
-
-The practical limit of this algorithm is on around $n=7$ binary source
+The practical limit of this algorithm is on around n=7 binary source
 variables, after which the computation of the set of synergistic channels
 becomes infeasible.
 
 Finally, the package also implements a full information decomposition similar
 to Williams and Beer's Partial Information Decomposition (PID):
 
-`
-import dit
-from syndisc.pid import PID_SD
+.. code-block:: python
+  from syndisc.pid import PID_SD
 
-AND = dit.example_dists.And()
-print(PID_SD(AND))
-`
+  AND = dit.example_dists.And()
+  print(PID_SD(AND))
 
-Further examples can be found in the `examples/` folder.
+Further examples can be found in the ``examples/`` folder.
 
 
-## Download and installation
+Download and installation
+-------------------------
 
-The package can be installed via standard `distutils` functionality.
+The package can be installed via standard ``distutils`` functionality.
 
-`
-python setup.py install
-`
+.. code-block::
+  $ python setup.py install
 
-This may need root (i.e. `sudo`) permissions, depending on your Python
+This may need root (i.e. ``sudo``) permissions, depending on your Python
 environment configuration.
 
-Pytest-compatible tests are provided in the `test/` subfolder.
+Pytest-compatible tests are provided in the ``tests/`` subfolder.
 
-
-### Requirements
+Requirements
+------------
 
 This package depends heavily on two other packages:
 
-* `dit`, a general-purpose information theory package used for general handling
+* ``dit``, a general-purpose information theory package used for general handling
 of probability distributions.
 
-* `pypoman`, a computational geometry package used to find the set of
+* ``pypoman``, a computational geometry package used to find the set of
 synergistic channels for a set of sources.
 
+In addition, it depends on other common packages (i.e. numpy, scipy, etc). All
+of these are specified in the ``setup.py`` file.
 
-## Licence
+Licence
+-------
 
-This software is distributed under the MIT Licence.
+This software is distributed under the modified 3-clause BSD Licence.
 
+Further reading
+---------------
 
-## Further reading
-
-* B. Rassouli*, F. Rosas*, D. Gunduz (2019). Data disclosure under perfect
+* B. Rassouli\*, F. Rosas\*, D. Gunduz (2019). Data disclosure under perfect
   sample privacy. TIFS.
 
 * P. Williams and R. Beer (2010). Nonnegative decomposition of multivariate
   information.
 
 
-(C) Pedro Mediano and Fernando Rosas, 2019-2020
-
+\(C\) Pedro Mediano and Fernando Rosas, 2019-2020
