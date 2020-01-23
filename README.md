@@ -47,24 +47,26 @@ the synergistic disclosure as described in the paper above. The main point of
 access to the code is the `disclosure()` function, which takes a
 `dit.Distribution` as argument:
 
-.. code-block:: python
-  import dit
-  from syndisc import disclosure
+```python
+import dit
+from syndisc import disclosure
 
-  XOR = dit.example_dists.Xor()
-  print('Synergy in XOR: ', disclosure(XOR))
+XOR = dit.example_dists.Xor()
+print('Synergy in XOR: ', disclosure(XOR))
 
-  COPY = dit.example_dists.giant_bit()
-  print('Synergy in COPY: ', disclosure(COPY))
+COPY = dit.example_dists.giant_bit()
+print('Synergy in COPY: ', disclosure(COPY))
+```
 
-By default, for a distribution of n+1 variables, ``disclosure()`` uses the
+By default, for a distribution of n+1 variables, `disclosure()` uses the
 first n as sources, the last one as target, and uses the constraint set
-``{1}{2}...{n}``. These can be changed via optional arguments:
+`{1}{2}...{n}`. These can be changed via optional arguments:
 
-.. code-block:: python
-  dblxor = dit.pid.distributions.trivariate.dblxor
-  disclosure(dblxor)
-  disclosure(dblxor, cons=[[0,1]])
+```python
+dblxor = dit.pid.distributions.trivariate.dblxor
+disclosure(dblxor)
+disclosure(dblxor, cons=[[0,1]])
+```
 
 The practical limit of this algorithm is on around n=7 binary source
 variables, after which the computation of the set of synergistic channels
@@ -73,41 +75,43 @@ becomes infeasible.
 Finally, the package also implements a full information decomposition similar
 to Williams and Beer's Partial Information Decomposition (PID):
 
-.. code-block:: python
-  from syndisc.pid import PID_SD
+```python
+from syndisc.pid import PID_SD
 
-  AND = dit.example_dists.And()
-  print(PID_SD(AND))
+AND = dit.example_dists.And()
+print(PID_SD(AND))
+```
 
-Further examples can be found in the ``examples/`` folder.
+Further examples can be found in the `examples/` folder.
 
 
 Download and installation
 -------------------------
 
-The package can be installed via standard ``distutils`` functionality.
+The package can be installed via standard `distutils` functionality.
 
-.. code-block::
-  $ python setup.py install
+```
+$ python setup.py install
+```
 
-This may need root (i.e. ``sudo``) permissions, depending on your Python
+This may need root (i.e. `sudo`) permissions, depending on your Python
 environment configuration.
 
-Pytest-compatible tests are provided in the ``tests/`` subfolder.
+Pytest-compatible tests are provided in the `tests/` subfolder.
 
 Requirements
 ------------
 
 This package depends heavily on two other packages:
 
-* ``dit``, a general-purpose information theory package used for general handling
+* `dit`, a general-purpose information theory package used for general handling
 of probability distributions.
 
-* ``pypoman``, a computational geometry package used to find the set of
+* `pypoman`, a computational geometry package used to find the set of
 synergistic channels for a set of sources.
 
 In addition, it depends on other common packages (i.e. numpy, scipy, etc). All
-of these are specified in the ``setup.py`` file.
+of these are specified in the `setup.py` file.
 
 Licence
 -------
