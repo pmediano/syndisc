@@ -201,7 +201,7 @@ def syn_solve(P, Px, PWgX=None, SVDmethod='standard', extremes='normal'):
     PXgY = quantize(ext_nonzero.transpose(),1e-4)
 
     u_nonzero = u[np.nonzero(u)]
-    pYgX = np.matrix(np.diag(u_nonzero))*np.matrix(ext_nonzero)*( np.matrix(np.diagflat(Px.T))**(-1) )
+    pYgX = np.diag(u_nonzero)@ext_nonzero@np.linalg.inv(np.diagflat(Px.T))
 
     # Return full channel dictionary
     channel_dict = {'pY': u, 'pXgY': PXgY, 'pYgX': pYgX}

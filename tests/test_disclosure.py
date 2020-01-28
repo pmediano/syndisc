@@ -56,6 +56,6 @@ def test_channel():
         # Optimal synergistic channel is XOR and disclosure is I(X1 xor X2; Y)
         xorfun = lambda outcome: (np.mod(outcome[0] + outcome[1], 2),)
         dist = dit.insert_rvf(dist, xorfun)
-        assert(np.allclose(C['pYgX'], np.matrix([[1,0,0,1],[0,1,1,0]])))
+        assert(np.allclose(C['pYgX'], [[1,0,0,1],[0,1,1,0]]))
         assert(np.isclose(S, coinformation(dist, [[2],[3]])))
 
