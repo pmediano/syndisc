@@ -12,7 +12,7 @@ setup(name="syndisc",
             "cvxopt",
             "numpy",
             "scipy",
-            "networkx",
+            "networkx>=2,<2.4",
             "matplotlib",   # Actually required by pypoman
             ],
         long_description=open("README.md").read(),
