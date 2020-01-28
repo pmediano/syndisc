@@ -15,7 +15,7 @@ setup(name="syndisc",
             "networkx",
             "matplotlib",   # Actually required by pypoman
             ],
-        long_description=open("README.rst").read(),
+        long_description=open("README.md").read(),
         license="BSD",
         classifiers=[
             "Intended Audience :: Science/Research",
