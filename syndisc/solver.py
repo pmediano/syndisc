@@ -1,6 +1,11 @@
 """
+Backend functions to solve algebraic and optimisation problems related to
+synergistic channels.
 
-Reference:
+References:
+
+    F. Rosas*, P. Mediano*, B. Rassouli and A. Barrett (2019). An operational
+    information decomposition via synergistic disclosure.
 
     B. Rassouli, Borzoo, F. Rosas, and D. Gündüz (2018). Latent Feature
     Disclosure under Perfect Sample Privacy. In 2018 IEEE WIFS, pp. 1-7.
