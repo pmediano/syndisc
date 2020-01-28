@@ -71,7 +71,7 @@ def synergy(dist):
     Computes simple synergy for the first n-1 variables in the distribution,
     using the last one as a target, and preserving the individual marginals.
 
-    Acts as a simple wrapper around `disclosure.disclosure` for ease of use.
+    Acts as a simple wrapper around `syndisc.disclosure` for ease of use.
 
     Parameters
     ----------
