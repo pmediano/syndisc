@@ -1,6 +1,10 @@
 """
 Basic demo code for syndisc package. Compute synergistic disclosure information
-in a few probability distributions of interest.
+in a few probability distributions of interest. Reproduces Figure 1 and Table 1
+of:
+
+    F. Rosas*, P. Mediano*, B. Rassouli and A. Barrett (2019). An operational
+    information decomposition via synergistic disclosure.
 
 Pedro Mediano and Fernando Rosas, 2019
 """
@@ -34,25 +38,20 @@ a = 0.5
 b = 0.5
 def CorrelatedAND(r):
     Px = dit.Distribution(['000','010','100','111'], [1-a-b+r, b-r, a-r, r])
-    MI = dit.multivariate.coinformation(Px, [[0],[1]])
     lat = pid.PID_SD(Px)
     return np.array([r,
-                     MI,
-                     lat.get_partial(((),)),
-                     lat.get_partial(((0,),)),
-                     lat.get_partial(((1,),)),
-                     lat.get_partial(((0,),(1,))),
-                     lat._total,
+                     lat.get_partial(((),))/lat._total,
+                     lat.get_partial(((0,),(1,)))/lat._total,
                      ])
 
 nb_samples = 100
-and_pid = np.zeros((nb_samples, 7))
+and_pid = np.zeros((nb_samples, 3))
 R = np.min([a, 1-b])
 r_vec = np.linspace(max(a*b, a+b-1), min(a,b), nb_samples)
 for i,rr in enumerate(r_vec):
     and_pid[i,:] = CorrelatedAND(rr)
-df = pd.DataFrame(and_pid, columns=['r', 'mi', '{}', '{0}', '{1}', '{0}{1}', 'total'])
+df = pd.DataFrame(and_pid, columns=['r', '{}', '{0}{1}'])
 
-df.plot(x='mi')
+df.plot(x='r')
 plt.show()
 
