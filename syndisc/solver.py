@@ -183,7 +183,7 @@ def syn_solve(P, Px, PWgX=None, SVDmethod='standard', extremes='normal'):
     
     ## Given these extremal entropies, solve the LP to find which distribution
     # minimises the joint entropy
-    u, minH = lp_sol( np.array(c), ext.T, Px)#, mode='scipy')
+    u, minH = lp_sol(np.array(c), ext.T, Px)
     
     if minH is None:
         raise RuntimeError("Optimisation did not work well.")
