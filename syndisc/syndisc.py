@@ -76,26 +76,24 @@ def disclosure_channel(dist, cons=None, output=None):
     if cons is None:
         cons = dist.rvs[:-1]
 
-    d = dist
-
     # With no constraints, shortcut and return full mutual info directly
     if len(cons) == 0:
         MI = dit.multivariate.coinformation(dist, 
                                         [flatten(inputs), output])
-        input_alphabet  = np.prod([len(d.alphabet[i[0]]) for i in inputs])
+        input_alphabet  = np.prod([len(dist.alphabet[i[0]]) for i in inputs])
         channel = np.eye(input_alphabet)
         return MI, channel
 
 
-    pX, pWgX = d.condition_on(flatten(inputs))
+    pX, pWgX = dist.condition_on(flatten(inputs))
 
     # Make all distributions dense before extracting the PMFs
     pX.make_dense()
     for p in pWgX:
         p.make_dense()
 
-    output_alphabet = len(d.alphabet[output[0]])
-    input_alphabet  = np.prod([len(d.alphabet[i[0]]) for i in inputs])
+    output_alphabet = len(dist.alphabet[output[0]])
+    input_alphabet  = np.prod([len(dist.alphabet[i[0]]) for i in inputs])
     pWgX_ndarray = np.zeros((output_alphabet, input_alphabet))
 
     count = 0
@@ -104,7 +102,7 @@ def disclosure_channel(dist, cons=None, output=None):
             pWgX_ndarray[:,i] = pWgX[count].pmf
             count = count + 1
 
-    P = build_constraint_matrix(cons, d.coalesce(inputs))
+    P = build_constraint_matrix(cons, dist.coalesce(inputs))
 
     return syn_solve(P, pX.pmf, pWgX_ndarray)
 
