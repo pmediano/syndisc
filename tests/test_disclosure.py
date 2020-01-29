@@ -59,3 +59,18 @@ def test_channel():
         assert(np.allclose(C['pVgX'], [[1,0,0,1],[0,1,1,0]]))
         assert(np.isclose(S, coinformation(dist, [[2],[3]])))
 
+def test_output():
+    xor = dit.example_dists.Xor()
+    # Standard disclosure computation
+    assert(np.isclose(disclosure(xor), 1))
+
+    # Change output
+    assert(np.isclose(disclosure(xor, output=[0]), 1))
+    assert(np.isclose(disclosure(xor, output=[1]), 1))
+    assert(np.isclose(disclosure(xor, output=[2]), 1))
+
+    # Change output and constraints
+    assert(np.isclose(disclosure(xor, cons=[[0,1]], output=[0]), 0))
+    assert(np.isclose(disclosure(xor, cons=[[0,1]], output=[1]), 0))
+    assert(np.isclose(disclosure(xor, cons=[[0,1]], output=[2]), 0))
+
