@@ -6,7 +6,7 @@ via privacy-preserving data disclosure. This repository contains the companion
 software for the paper:
 
 F. Rosas\*, P. Mediano\*, B. Rassouli and A. Barrett (2019). An operational
-information decomposition via synergistic disclosure.
+information decomposition via synergistic disclosure. https://arxiv.org/abs/2001.10387
 
 Please cite the paper (and give us a shout!) if you use this software. Please
 contact Pedro Mediano for bug reports, pull requests, and feature requests.
