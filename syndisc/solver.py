@@ -209,7 +209,9 @@ def syn_solve(P, Px, PWgX=None, SVDmethod='standard', extremes='normal'):
     pYgX = np.diag(u_nonzero)@ext_nonzero@np.linalg.inv(np.diagflat(Px.T))
 
     # Return full channel dictionary
-    channel_dict = {'pY': u, 'pXgY': PXgY, 'pYgX': pYgX}
+    # (Note: change between Y and V is due to a mismatch between old notation
+    # in TIFS/WIFS papers and newer notation in PID paper.)
+    channel_dict = {'pV': u, 'pXgV': PXgY, 'pVgX': pYgX}
 
     return Is, channel_dict
 
