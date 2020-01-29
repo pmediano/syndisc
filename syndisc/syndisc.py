@@ -69,7 +69,6 @@ def disclosure_channel(dist, cons=None, output=None):
         cons = dist.rvs[:-1]
     inputs = dist.rvs[:-1]
 
-    flatten = lambda l: [item for sublist in l for item in sublist]
     d = dist
 
     # With no constraints, shortcut and return full mutual info directly
@@ -190,4 +189,9 @@ def build_constraint_matrix(cons, d):
     P = np.vstack(P_list)
 
     return P
+
+
+def flatten(l):
+    """Utility function to flatten an iter of iters into an iter."""
+    return [item for sublist in l for item in sublist]
 
