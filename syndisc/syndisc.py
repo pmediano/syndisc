@@ -51,7 +51,9 @@ def disclosure_channel(dist, cons=None, output=None):
         The distribution to compute the decomposition on.
     cons : iter of iters, None
         List of constraints to preserve when computing disclosure. Defaults to
-        preserving all individual marginals.
+        preserving all individual marginals. (Note: if `output` is given, first
+        the distribution is reshaped to move `output` to the last position, and
+        then the constraints are applied.)
     output : iter, None
         The output variable. If None, `dist.rvs[-1]` is used.
 
@@ -63,11 +65,16 @@ def disclosure_channel(dist, cons=None, output=None):
         Dict with forward, backward, and marginal PDFs for the optimal
         synergistic channel
     """
-    if output is None:
-        output = dist.rvs[-1]
+    if output is not None:
+        # Reshape dist to move `output` to the last position
+        inputs = [var for var in dist.rvs if var[0] not in output]
+        dist = dist.coalesce([list(flatten(inputs)) + list(output)], extract=True)
+
+    output = dist.rvs[-1]
+    inputs = dist.rvs[:-1]
+
     if cons is None:
         cons = dist.rvs[:-1]
-    inputs = dist.rvs[:-1]
 
     d = dist
 
