@@ -20,6 +20,8 @@ from .solver import syn_solve
 
 def disclosure(dist, cons=None, output=None):
     """
+    Compute the synergistic disclosure of a given probability distribution.
+
     Parameters
     ----------
     dist : Distribution
@@ -40,6 +42,9 @@ def disclosure(dist, cons=None, output=None):
 
 def disclosure_channel(dist, cons=None, output=None):
     """
+    Compute the synergistic disclosure of a given probability distribution, and
+    return a dictionary with the optimal synergistic channel.
+
     Parameters
     ----------
     dist : Distribution

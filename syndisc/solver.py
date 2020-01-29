@@ -65,7 +65,7 @@ def extreme_points(P, Px, SVDmethod='standard'):
     rankP = np.sum(S > 1e-6)
     A = Vh[:rankP,:]
     
-    b = np.matmul(A,Px)    
+    b = np.matmul(A,Px)
     
     # Turn np.matrix into np.array for polytope computations
     A = np.array(A)
@@ -179,7 +179,7 @@ def syn_solve(P, Px, PWgX=None, SVDmethod='standard', extremes='normal'):
     ext = extreme_points(P, Px, SVDmethod)
     
     if len(ext)==0:
-        print('Damn, the optimization didn\'t worked well...')
+        print('Damn, the optimization didn\'t work well...')
         return np.nan
     
     # find the c's

@@ -144,7 +144,7 @@ class PID_SD(BasePID):
     @staticmethod
     def _measure(d, inputs, output):
         """
-        Compute I_dis
+        Compute synergistic disclosure.
 
         Parameters
         ----------
