@@ -135,7 +135,12 @@ class PID_SD(BasePID):
         self._lattice.root = next(iter(nx.topological_sort(self._lattice)))
 
         self._total = coinformation(self._dist, [list(flatten(self._inputs)), self._output])
-        self._compute(reds, pis)
+        
+        self._reds = {} if reds is None else reds
+        self._pis = {} if pis is None else pis
+
+        
+        self._compute()
 
         self._lattice = self._lattice.reverse()
         self._lattice.root = next(iter(nx.topological_sort(self._lattice)))
