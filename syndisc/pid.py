@@ -22,6 +22,8 @@ from dit.utils import flatten
 from dit.utils import powerset
 from itertools import combinations, islice, permutations
 import networkx as nx
+from lattices.lattices import dependency_lattice
+from dit.pid.pid import _transform
 
 
 def full_constraint_lattice(elements):
@@ -40,38 +42,8 @@ def full_constraint_lattice(elements):
     lattice : nx.DiGraph
         The lattice of antichains.
     """
-    def comparable(a, b):
-        return a < b or b < a
-
-    def antichain(ss):
-        if not ss:
-            return False
-        return all(not comparable(frozenset(a), frozenset(b)) for a, b in combinations(ss, 2))
-
-
-    def less_than(sss1, sss2):
-        return all(any(set(ss1) <= set(ss2) for ss2 in sss2) for ss1 in sss1)
-
-    def normalize(sss):
-        return tuple(sorted(tuple( tuple(sorted(ss)) for ss in sss ),
-                            key=lambda s: (-len(s), s)))
-
-    # Enumerate all nodes in the lattice (same nodes as in usual PID lattice)
     elements = set(elements)
-    combos = (sum(s, tuple()) for s in powerset(elements))
-    pps = [ss for ss in powerset(combos) if antichain(ss)]
-
-    # Compute all order relationships using the constraint lattice ordering
-    order = [(a, b) for a, b in permutations(pps, 2) if less_than(a, b)]
-
-    # Build the DiGraph by removing redundant order relationships
-    lattice = nx.DiGraph()
-    for a, b in order:
-        if not any(((a, c) in order) and ((c, b) in order) for c in pps):
-            lattice.add_edge(normalize(b), normalize(a))
-    lattice.root = next(iter(nx.topological_sort(lattice)))
-
-    return lattice
+    return _transform(dependency_lattice(elements, cover=False).inverse())
 
 
 def synergy(dist):
@@ -129,16 +101,9 @@ class PID_SD(BasePID):
 
         self._lattice = full_constraint_lattice(self._inputs)
 
-        # To compute the Mobius inversion reusing dit's code, we reverse the
-        # lattice, compute Mobius, and reverse it back again.
-        self._lattice = self._lattice.reverse()
-        self._lattice.root = next(iter(nx.topological_sort(self._lattice)))
-
         self._total = coinformation(self._dist, [list(flatten(self._inputs)), self._output])
-        self._compute(reds, pis)
-
-        self._lattice = self._lattice.reverse()
-        self._lattice.root = next(iter(nx.topological_sort(self._lattice)))
+        self._reds = {} if reds is None else reds
+        self._pis = {} if pis is None else pis
 
 
     @staticmethod
