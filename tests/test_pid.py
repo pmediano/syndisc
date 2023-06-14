@@ -23,11 +23,11 @@ def assert_only_atom(pid, node, val):
     val : float
         Expected value of PI at `node`
     """
-    for n in pid._lattice.nodes:
+    for n in pid._lattice._lattice.nodes:
         if n == node:
-            assert(np.isclose(pid.get_partial(n), val))
+            assert(np.isclose(pid.get_pi(n), val))
         else:
-            assert(np.isclose(pid.get_partial(n), 0))
+            assert(np.isclose(pid.get_pi(n), 0))
 
 
 def test_xor():
@@ -53,7 +53,7 @@ def test_giant_bit():
     # All sources and target are copies of the same bit
     dist = dit.example_dists.giant_bit(4)
     pid = PID_SD(dist)
-    assert_only_atom(pid, ((),), 1)
+    assert_only_atom(pid, (), 1)
 
 def test_uniform():
     # Everything is independent from everything
