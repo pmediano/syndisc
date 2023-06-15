@@ -40,8 +40,8 @@ def CorrelatedAND(r):
     Px = dit.Distribution(['000','010','100','111'], [1-a-b+r, b-r, a-r, r])
     lat = pid.PID_SD(Px)
     return np.array([r,
-                     lat.get_partial(((),))/lat._total,
-                     lat.get_partial(((0,),(1,)))/lat._total,
+                     lat.get_pi(())/lat._total,
+                     lat.get_pi(((0,),(1,)))/lat._total,
                      ])
 
 nb_samples = 100
